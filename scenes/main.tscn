@@ -1,0 +1,195 @@
+[gd_scene format=3 uid="uid://bte5ahwid5a7k"]
+
+[ext_resource type="PackedScene" uid="uid://bn126k5ng0mgh" path="res://car.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://eh7i5eke1o0d" path="res://follow_camera.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://dsqhka4rd83c0" path="res://track_manager.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://dv6pqgm7jhv0q" path="res://track_path.gd" id="4_1bvp3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a5ewq"]
+albedo_color = Color(0, 1, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8vxiq"]
+material = SubResource("StandardMaterial3D_a5ewq")
+size = Vector3(500, 2, 500)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uoj53"]
+albedo_color = Color(0.36862746, 1, 0.24705882, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7fp6i"]
+size = Vector3(500, 2, 500)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5o3d4"]
+albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7fp6i"]
+size = Vector3(8, 0.2, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1100a"]
+albedo_color = Color(0.20511743, 0.20511743, 0.20511743, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5ewq"]
+size = Vector3(8, 0.2, 200)
+
+[sub_resource type="Gradient" id="Gradient_ig7tw"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0xm2m"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h2yge"]
+noise = SubResource("FastNoiseLite_0xm2m")
+color_ramp = SubResource("Gradient_ig7tw")
+seamless = true
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_1bvp3"]
+_shader_parameters = {
+&"bias_distance": null,
+&"blend_sharpness": null,
+&"depth_blur": null,
+&"enable_macro_variation": null,
+&"enable_projection": null,
+&"flat_terrain_normals": null,
+&"macro_variation1": null,
+&"macro_variation2": null,
+&"macro_variation_slope": null,
+&"mipmap_bias": null,
+&"noise1_angle": null,
+&"noise1_offset": null,
+&"noise1_scale": null,
+&"noise2_scale": null,
+&"noise_texture": SubResource("NoiseTexture2D_h2yge"),
+&"projection_threshold": null
+}
+show_checkered = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+transparency = 4
+cull_mode = 2
+vertex_color_use_as_albedo = true
+backlight_enabled = true
+backlight = Color(0.5, 0.5, 0.5, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 128.0
+distance_fade_max_distance = 96.0
+
+[sub_resource type="Terrain3DMeshAsset" id="Terrain3DMeshAsset_7mycd"]
+generated_type = 1
+height_offset = 0.5
+material_override = SubResource("StandardMaterial3D_lquwl")
+last_lod = 0
+last_shadow_lod = 0
+lod0_range = 128.0
+
+[sub_resource type="Terrain3DAssets" id="Terrain3DAssets_272bh"]
+mesh_list = Array[Terrain3DMeshAsset]([SubResource("Terrain3DMeshAsset_7mycd")])
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8vxiq"]
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vxiq"]
+size = Vector3(14, 6, 4)
+
+[sub_resource type="Curve3D" id="Curve3D_sjfss"]
+closed = true
+_data = {
+"points": PackedVector3Array(-9.890523, 0.86272174, -1.3846741, 9.890523, -0.86272174, 1.3846741, -24.807163, 37.18997, -238.35516, -19.583242, 1.3065456, -7.5168, 19.583242, -1.3065456, 7.5168, 34.535976, 32.013638, -230.04712, -16.616089, -2.0387313, -15.033597, 16.616089, 2.0387313, 15.033597, 92.69228, 29.350695, -193.25436, -14.044537, -7.2258973, -18.791996, 14.044537, 7.2258973, 18.791996, 134.23251, 44.246025, -139.84554, -17.802948, -2.7084503, -16.418272, 17.802948, 2.7084503, 16.418272, 176.9595, 72.70608, -80.50239, -13.253316, 0.7431488, -15.627027, 13.253316, -0.7431488, 15.627027, 241.0502, 60.496727, -41.3359, 1.7802938, -2.2555199, -18.989805, -1.7802938, 2.2555199, 18.989805, 256.4794, 68.247185, 13.259771, 13.648926, 1.4293747, -14.835789, -13.648926, -1.4293747, 14.835789, 230.36844, 74.02985, 72.60293, 17.605135, 4.4278235, -7.714615, -17.605135, -4.4278235, 7.714615, 174.58585, 59.670937, 102.274506, 9.890525, 4.2682557, -12.264249, -9.890525, -4.2682557, 12.264249, 124.73763, 47.462906, 118.89062, 5.934326, 2.9495656, -16.022646, -5.934326, -2.9495656, 16.022646, 115.2427, 34.0614, 175.86, 13.055501, -1.0766392, -7.5168, -13.055501, 1.0766392, 7.5168, 89.131676, 29.765512, 215.02649, 20.770102, -0.5269556, -0.5934321, -20.770102, 0.5269556, 0.5934321, 36.909695, 40.521236, 220.9608, 21.759155, 1.9289103, 3.758395, -21.759155, -1.9289103, -3.758395, -35.488926, 32.927246, 218.58708, 18.989807, -3.0499802, 12.066444, -18.989807, 3.0499802, -12.066444, -93.64524, 28.947775, 198.41043, 14.440164, -3.8444307, 14.637982, -14.440164, 3.8444307, -14.637982, -149.42776, 51.227127, 146.18842, 6.1321206, 2.8302295, 13.648921, -6.1321206, -2.8302295, -13.648921, -180.28622, 52.01436, 110.582535, 4.549642, 3.065759, 12.264249, -4.549642, -3.065759, -12.264249, -186.22049, 34.24575, 64.29489, 10.286153, -0.941878, 7.9124203, -10.286153, 0.941878, -7.9124203, -207.58408, 33.619804, 36.997036, 11.868622, -1.1718737, 6.329935, -11.868622, 1.1718737, -6.329935, -247.93741, 39.89702, 16.82037, 4.5496316, -0.37580743, 6.923364, -4.5496316, 0.37580743, -6.923364, -278.7958, 40.651047, -0.9825757, -5.3408813, 0.42137146, 6.329935, 5.3408813, -0.42137146, -6.329935, -275.2352, 42.151863, -24.719814, -9.297089, 2.8900366, 2.5715377, 9.297089, -2.8900366, -2.5715377, -246.75052, 38.122818, -38.962185, -8.703664, 3.150863, 0.39561906, 8.703664, -3.150863, -0.39561906, -219.45267, 24.811644, -40.14904, -9.297089, 0.8196068, 2.3737247, 9.297089, -0.8196068, -2.3737247, -194.52853, 19.21764, -41.3359, -5.736511, -0.19078922, 6.132126, 5.736511, 0.19078922, -6.132126, -163.67014, 19.894003, -54.391388, 3.3627727, -0.71456814, 6.923368, -3.3627727, 0.71456814, -6.923368, -160.10947, 20.362375, -78.128654, 5.5386963, -2.0099561, 8.703663, -5.5386963, 2.0099561, -8.703663, -183.84677, 24.181412, -95.931595, -0.9890544, -0.74496365, 11.07739, 0.9890544, 0.74496365, -11.07739, -193.34164, 32.42211, -130.35063, -8.110219, 1.1681439, 6.132126, 8.110219, -1.1681439, -6.132126, -177.91245, 28.651194, -162.39594, -12.462055, 1.4157543, 0, 12.462055, -1.4157543, 0, -144.68033, 25.413248, -167.14339, -8.110238, -0.92444545, 5.3408837, 8.110238, 0.92444545, -5.3408837, -103.140114, 20.156668, -162.39594, -6.3299356, -2.0036829, 8.505852, 6.3299356, 2.0036829, -8.505852, -96.0189, 30.95992, -199.18869, -8.011476, -0.66927624, 4.475454, 8.011476, 0.66927624, -4.475454, -65.1605, 32.178764, -213.43105, -2.868409, -0.46613565, 2.1017277, 2.868409, 0.46613565, -2.1017277, -47.950047, 34.97558, -226.04141),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 35
+
+[node name="Node3D" type="Node3D" unique_id=1513441710]
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1667643796]
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1593737212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_8vxiq")
+surface_material_override/0 = SubResource("StandardMaterial3D_uoj53")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1100633892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+shape = SubResource("BoxShape3D_7fp6i")
+
+[node name="Car" parent="." unique_id=1870841645 instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=229799759]
+transform = Transform3D(0.8660254, 0.35355338, -0.35355338, 0, 0.70710677, 0.70710677, 0.5, -0.6123724, 0.6123724, 0, 0, 0)
+
+[node name="Road" type="StaticBody3D" parent="." unique_id=1313572338]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Road" unique_id=429816251]
+material_override = SubResource("StandardMaterial3D_5o3d4")
+mesh = SubResource("BoxMesh_7fp6i")
+surface_material_override/0 = SubResource("StandardMaterial3D_1100a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Road" unique_id=2040751434]
+shape = SubResource("BoxShape3D_a5ewq")
+
+[node name="Terrain3D" type="Terrain3D" parent="Road/CollisionShape3D" unique_id=1154907928]
+data_directory = "res://terrain_data"
+material = SubResource("Terrain3DMaterial_1bvp3")
+assets = SubResource("Terrain3DAssets_272bh")
+physics_material = SubResource("PhysicsMaterial_8vxiq")
+show_checkered = true
+top_level = true
+metadata/_edit_lock_ = true
+
+[node name="FollowCamera" type="Camera3D" parent="." unique_id=103703680 node_paths=PackedStringArray("target")]
+script = ExtResource("2_0xm2m")
+target = NodePath("../Car")
+
+[node name="Checkpoints" type="Node3D" parent="." unique_id=1246733553 node_paths=PackedStringArray("car")]
+script = ExtResource("3_h2yge")
+car = NodePath("../Car")
+
+[node name="Start" type="Area3D" parent="Checkpoints" unique_id=161928805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.495573, 80.85972)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Start" unique_id=1837083186]
+shape = SubResource("BoxShape3D_8vxiq")
+
+[node name="CP1" type="Area3D" parent="Checkpoints" unique_id=58622886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.495573, 10.304485)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/CP1" unique_id=435432804]
+shape = SubResource("BoxShape3D_8vxiq")
+
+[node name="CP2" type="Area3D" parent="Checkpoints" unique_id=210029979]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.495573, -87.89888)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/CP2" unique_id=529276057]
+shape = SubResource("BoxShape3D_8vxiq")
+
+[node name="TrackPath" type="Path3D" parent="." unique_id=797993088 node_paths=PackedStringArray("terrain")]
+curve = SubResource("Curve3D_sjfss")
+script = ExtResource("4_1bvp3")
+auto_generate = false
+terrain = NodePath("../Road/CollisionShape3D/Terrain3D")
+bank_amount = 0.0
+
+[node name="TrackRoad" type="CSGPolygon3D" parent="." unique_id=655811208]
+use_collision = true
+polygon = PackedVector2Array(-18, -3, -6, 0, 6, 0, 18, -3)
+mode = 2
+path_node = NodePath("../TrackPath")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = true
